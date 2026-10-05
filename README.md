@@ -5,6 +5,8 @@ A reconstructed implementation scaffold for the system in:
 > **Dynamic Adapter Swapping and Retrieval-Augmented Generation for Stochastic Parroting
 > Reduction in Large Language Models.** Christopher Puglisi, JHU Applied & Computational
 > Math, May 2024. Mentor: Zerotti Woods, PhD.
+>
+> 📄 Full write-up: [`paper/JHU_ACM_Independent_Study_Puglisi_05032024.pdf`](./paper/JHU_ACM_Independent_Study_Puglisi_05032024.pdf)
 
 > ### 🛑 Read [`WARNINGS.md`](./WARNINGS.md) first.
 > This code produces medical-sounding text, the headline "81.2%" number is easy to misread,
