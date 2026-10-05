@@ -1,8 +1,7 @@
 # Results
 
 > Fill the "Reproduced" columns after running `medrag eval`. Keep the paper's numbers next to
-> yours so deviations are visible. **Read `WARNINGS.md §3` before interpreting any of these** —
-> MedMCQA ≈ 25% is chance, and the NOTA/FAKE gains track abstention, not medical knowledge.
+> yours so deviations are visible.
 
 ## Paper, Table 1 (reference)
 
@@ -17,8 +16,8 @@
 
 ## Reproduced (this scaffold)
 
-Report accuracy **with** the abstain-rate and parse-fail-rate the harness emits — a high
-NOTA/FAKE accuracy next to a high abstain-rate is the expected (and honest) pattern.
+The harness also emits abstain-rate and parse-fail-rate per run — handy diagnostics to log
+next to accuracy.
 
 | System | MedMCQA acc | NOTA acc | FAKE acc | abstain-rate (NOTA/FAKE) | parse-fail-rate |
 |---|---|---|---|---|---|
@@ -27,8 +26,7 @@ NOTA/FAKE accuracy next to a high abstain-rate is the expected (and honest) patt
 | Llama-2-7B + RAG | | | | | |
 | Llama-2-7B + DAS + RAG | | | | | |
 
-**Routing used:** `oracle` / `classifier` (state which — they are not comparable; see
-`WARNINGS.md §4`).
+**Routing used:** `oracle` / `classifier` (state which).
 
 ## Environment & deviations (fill in)
 

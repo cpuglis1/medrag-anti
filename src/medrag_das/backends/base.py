@@ -4,7 +4,7 @@ A backend owns: loading the quantized base model, fusing exactly one QLoRA adapt
 time, generating text, and training an adapter. Keeping this behind a Protocol lets the
 rest of the system stay backend-agnostic.
 
-Memory contract (WARNINGS.md §7): `fuse_adapter` must swap — load one adapter, releasing
+Memory contract (WARNINGS.md §4): `fuse_adapter` must swap — load one adapter, releasing
 any previously fused one. Never hold 21 adapters live (≈84 GiB). One at a time ≈ <5 GiB.
 """
 from __future__ import annotations

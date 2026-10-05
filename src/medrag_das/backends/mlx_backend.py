@@ -8,7 +8,7 @@ API call fails.
 Paper-faithful behavior:
   * 8-bit quantized base (~3.98 GiB live) — produced by a one-time mlx_lm.convert -q
   * QLoRA: num_layers=4 (not 16), batch_size=2, train-loss-plateau early stopping
-  * exactly one adapter fused at a time (WARNINGS.md §7) — fuse reloads base+adapter
+  * exactly one adapter fused at a time (WARNINGS.md §4) — fuse reloads base+adapter
 """
 from __future__ import annotations
 

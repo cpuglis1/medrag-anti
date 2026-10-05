@@ -4,8 +4,8 @@ The paper asked the model to emit JSON {'cop', 'cop index', 'why correct'} but r
 outputs "did not follow that format" and required "a mixture of text processing techniques
 and manual review." This module is a best-effort automated reconstruction of that step.
 
-IMPORTANT (WARNINGS.md §5): always log `raw`, and report `parse_failed` rate alongside any
-accuracy number. A silent parse failure scored as "wrong" (or "right") corrupts the metric.
+Tip: always log `raw`, and report the `parse_failed` rate alongside accuracy — a silent parse
+failure scored as "wrong" (or "right") corrupts the metric.
 """
 from __future__ import annotations
 

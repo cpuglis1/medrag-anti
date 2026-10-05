@@ -3,7 +3,7 @@
 The paper reports "accuracy" and, for NOTA, "balanced accuracy." It also notes outputs were
 often unparseable and partly hand-scored. Here we compute both plain and balanced accuracy
 AND surface the parse-failure rate, because a scorer that silently maps parse failures to
-"wrong" will understate/overstate systems differently (WARNINGS.md §5).
+"wrong" will understate/overstate systems differently.
 """
 from __future__ import annotations
 

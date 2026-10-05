@@ -1,7 +1,7 @@
 """Adapter registry — map category slug -> adapter directory, and drive swap/fuse.
 
 Thin layer over the backend's `fuse_adapter`. Enforces the one-adapter-at-a-time memory
-rule (WARNINGS.md §7) by tracking the currently-fused slug and no-op'ing redundant swaps.
+rule (WARNINGS.md §4) by tracking the currently-fused slug and no-op'ing redundant swaps.
 """
 from __future__ import annotations
 

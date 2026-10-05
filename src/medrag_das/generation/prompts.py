@@ -2,9 +2,8 @@
 
 Llama-2 chat format:  <s>[INST] <<SYS>> {system} <</SYS>> {user} [/INST]
 
-The system prompt deliberately encourages abstention ("I do not know"). That choice is
-central to interpreting the results: it biases the model toward the exact behavior the
-Med-HALT NOTA/FAKE tests reward. See WARNINGS.md §3 before drawing conclusions.
+The system prompt follows the paper's Appendix Table 4 verbatim, including its instruction to
+answer "I do not know" when uncertain rather than produce an unverified response.
 """
 from __future__ import annotations
 

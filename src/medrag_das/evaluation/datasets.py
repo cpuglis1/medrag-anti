@@ -15,7 +15,7 @@ Defining "correct" per dataset (paper §4.1):
 ⚠️ The Hugging Face field names / dataset ids below are the best-known mapping and are marked
 VERIFY. They are applied through `_normalize_mcq`, which raises loudly if an expected field is
 missing — it will NOT silently mis-map. Confirm against the actual datasets before trusting
-any score (WARNINGS.md §5). The fixture path is fully exercised by tests and needs no verify.
+any score. The fixture path is fully exercised by tests and needs no verify.
 """
 from __future__ import annotations
 

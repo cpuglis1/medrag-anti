@@ -2,7 +2,7 @@
 
 NOT part of the paper (the paper used MLX because bitsandbytes has no Apple-Silicon support).
 Provided so the system can run on NVIDIA hardware. Its numbers have NOT been reconciled with
-the paper — treat any result from this path as a separate experiment (WARNINGS.md §7).
+the paper — treat any result from this path as a separate experiment (WARNINGS.md §4).
 
 Needs the `torch` extra: `pip install -e .[torch]`.
 """

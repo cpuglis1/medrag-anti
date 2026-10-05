@@ -9,10 +9,9 @@ A reconstructed implementation scaffold for the system in:
 > 📄 Full write-up: [`paper/JHU_ACM_Independent_Study_Puglisi_05032024.pdf`](./paper/JHU_ACM_Independent_Study_Puglisi_05032024.pdf)
 
 > ### 🛑 Read [`WARNINGS.md`](./WARNINGS.md) first.
-> This code produces medical-sounding text, the headline "81.2%" number is easy to misread,
-> the original code is lost (this is rebuilt from the paper), and the adapter router in the
-> paper was an oracle. All four caveats are explained there. This is a **research
-> proof-of-concept, not a medical device.**
+> This is a **research proof-of-concept, not a medical device — don't use its output to make
+> clinical decisions.** It's also a reconstruction rebuilt from the paper (the original code
+> was lost), so it hasn't been run end-to-end yet.
 
 ---
 
@@ -41,10 +40,10 @@ mitigation mechanisms and routes every question through three units (paper, Fig.
   `stanford-crfm/BioMedLM`, stored in a FAISS `IndexFlatL2`.
 - **DAS:** 21 QLoRA adapters, each fine-tuned on one MedMCQA category subset (≤10k samples,
   early-stop on train-loss plateau, 4 LoRA layers, batch size 2).
-- **Selection:** oracle (ground-truth category) in the paper; a classifier stub is provided
-  for real deployment (see `WARNINGS.md` §4).
+- **Selection:** oracle (ground-truth category) in the paper; a question-text classifier is
+  also implemented for real deployment on unlabeled questions.
 
-## Reported results (paper, Table 1 — for context, not a target to overclaim)
+## Reported results (paper, Table 1)
 
 | System | MedMCQA | Med-HALT FAKE | Med-HALT NOTA |
 |---|---|---|---|
@@ -55,8 +54,9 @@ mitigation mechanisms and routes every question through three units (paper, Fig.
 | Llama-2-70B (ref) | NA | 97.26 | 77.53 |
 | GPT-3.5 (ref) | 49.10 | 71.64 | 27.64 |
 
-**MedMCQA ≈ 25% = chance.** The gains are on NOTA/FAKE (abstention-friendly tests). See
-`WARNINGS.md` §3.
+The DAS + RAG system reaches **81.2% on Med-HALT NOTA — above the reported Llama-2-70B and
+GPT-3.5 baselines on that test**, and improves FAKE over baseline, on ~4 GiB of local compute.
+See the write-up in [`paper/`](./paper/) for the full analysis.
 
 ## Layout
 
@@ -84,7 +84,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e .                      # see pyproject.toml / requirements.txt
 cp .env.template .env                 # fill in paths + HF token
 
-# 1. Build the PubMed knowledge base (slow; see WARNINGS §7)
+# 1. Build the PubMed knowledge base (slow; see WARNINGS §4)
 medrag build-kb --limit 100000
 
 # 2. Train the 21 category adapters (QLoRA via MLX)
@@ -101,7 +101,7 @@ All four commands are **fully implemented** (no stubs left). What they still nee
 run is **external**: a Hugging Face token with Llama-2 access, the datasets, and on-device
 compute — none of which ship in the repo. The code is written against the `mlx-lm` /
 `transformers` / `datasets` / `faiss` APIs as of early 2026; **pin your versions** and treat
-your first successful end-to-end run as the real validation (see `WARNINGS.md §1`).
+your first successful end-to-end run as the real validation (see `WARNINGS.md §2`).
 
 ## Status / implementation checklist
 

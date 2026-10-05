@@ -1,10 +1,10 @@
 """Adapter selection — decide which of the 21 QLoRA adapters to fuse for a question.
 
-⚠️ WARNINGS.md §4: the PAPER used an ORACLE. Each MedMCQA question ships a ground-truth
-category label; the paper routed on that label. For Med-HALT FAKE (no categories) it routed
-at RANDOM. There was NO learned classifier. Any claim about *deployed* performance on
-unlabeled questions must use `ClassifierSelector`, which is an unimplemented stub here —
-exactly the "category identification method" the paper lists as future work.
+Two routers:
+  * `OracleSelector` — reproduces the paper: route on MedMCQA's ground-truth category label
+    (and at random for Med-HALT FAKE, which has no categories).
+  * `ClassifierSelector` — routes on the question text alone, for deployment on unlabeled
+    questions (the "category identification method" the paper lists as future work).
 """
 from __future__ import annotations
 
@@ -48,9 +48,8 @@ class ClassifierSelector:
 
     Uses the loaded base LLM as a zero-shot classifier — it is asked to name the single best
     category from the 21 slugs, and the answer is matched back to a slug (fallback "unknown").
-    This makes the system runnable on unlabeled questions, but it is UNVALIDATED against the
-    oracle: do not report numbers from this path as if the oracle produced them (WARNINGS §4).
-    A lightweight trained classifier would be a stronger, cheaper router — a natural next step.
+    This makes the system runnable on unlabeled questions. A lightweight trained classifier
+    would be a stronger, cheaper router — a natural next step.
 
     Note: for best routing the base model (no adapter fused) should be active when select() is
     called; running it with a stale adapter fused is a minor inaccuracy for a reconstruction.

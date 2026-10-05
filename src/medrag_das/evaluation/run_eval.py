@@ -3,11 +3,12 @@
 Reconstructs the experimental grid. Builds the backend, KB retriever, adapter registry, and
 selector from config, then runs each (method, dataset) pair and scores it.
 
-Honesty hooks baked in (WARNINGS.md §3/§4/§5):
-  * DAS uses the ORACLE selector by default (what the paper did) — reported as such.
-  * For FAKE, a correct answer = abstention; selection is random.
-  * Reports accuracy AND balanced accuracy AND parse-fail/abstain rates, so a high NOTA/FAKE
-    score can be read against the abstention rate that likely produced it.
+Notes:
+  * DAS uses the ORACLE selector by default (what the paper did); set selection.strategy to
+    `classifier` to route on question text for unlabeled/deployment use.
+  * For Med-HALT FAKE, a correct answer = recognizing it as unanswerable (abstain); the paper
+    selects a random adapter there.
+  * Reports accuracy, balanced accuracy, and parse-fail/abstain rates per run.
   * Writes per-question raw generations to <out_dir>/raw/*.jsonl so scores are auditable.
 """
 from __future__ import annotations

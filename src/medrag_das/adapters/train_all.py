@@ -1,7 +1,7 @@
 """Train all 21 category adapters sequentially (paper §3.4.2).
 
 One base model, 21 small adapters — total extra storage is only a few MiB per adapter, which
-is the whole point of DAS vs. fusing 21 full models (WARNINGS.md §7).
+is the whole point of DAS vs. fusing 21 full models (WARNINGS.md §4).
 """
 from __future__ import annotations
 
