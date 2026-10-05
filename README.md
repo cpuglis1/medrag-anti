@@ -112,7 +112,7 @@ your first successful end-to-end run as the real validation (see `WARNINGS.md §
 - [x] Pipeline orchestration for all 4 methods; metrics; dataset loaders (fixture path)
 - [x] MLX backend (load/generate/fuse/QLoRA-train) + Torch/CUDA backend
 - [x] BioMedLM embedder + FAISS KB build + PubMed streaming ingest
-- [x] Fixtures + GitHub Actions CI
+- [x] Fixtures + GitHub Actions CI (workflow parked at `ci/ci.yml` — see that file to activate)
 
 **Needs a real run to validate (external deps, can't be done offline):**
 - [ ] First end-to-end run on Apple Silicon with Llama-2 weights (pin `mlx-lm` version)
