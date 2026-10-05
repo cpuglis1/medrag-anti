@@ -95,19 +95,24 @@ medrag eval --methods baseline das rag das_rag --datasets medmcqa nota fake
 medrag ask --question "..." --options "A ... B ... C ... D ..." --category pharmacology
 ```
 
-Every command currently runs against **stubs** that raise `NotImplementedError` with a
-pointer to the exact paper section to implement. Fill them in module by module; the
-contracts, shapes, and warnings are already written.
+All four commands are **fully implemented** (no stubs left). What they still need to actually
+run is **external**: a Hugging Face token with Llama-2 access, the datasets, and on-device
+compute — none of which ship in the repo. The code is written against the `mlx-lm` /
+`transformers` / `datasets` / `faiss` APIs as of early 2026; **pin your versions** and treat
+your first successful end-to-end run as the real validation (see `WARNINGS.md §1`).
 
 ## Status / implementation checklist
 
+**Implemented + tested offline (26 tests, no GPU/weights/downloads):**
 - [x] Project structure, config, categories, prompts (verbatim from Appendix Table 4)
-- [x] Robust output parser + tests
-- [x] Semantic-search math (cosine-threshold subset → top-3 L2) + tests
-- [x] Backend interface + oracle/classifier selector split
-- [x] Dataset loaders: fixture path tested offline; HF field-mapping in place (marked VERIFY)
-- [x] Offline test fixtures + GitHub Actions CI (18 tests, no GPU/weights/downloads)
-- [ ] MLX base-model load + generate (`backends/mlx_backend.py`)
-- [ ] BioMedLM embedding + FAISS build (`retrieval/`)
-- [ ] QLoRA training loop via MLX (`adapters/train_*.py`)
-- [ ] Verify HF dataset ids/fields in `eval/datasets.py` against live MedMCQA/Med-HALT
+- [x] Robust output parser; semantic-search math (cosine-threshold → top-3 L2)
+- [x] Oracle **and** classifier adapter routers; adapter registry/swap
+- [x] Pipeline orchestration for all 4 methods; metrics; dataset loaders (fixture path)
+- [x] MLX backend (load/generate/fuse/QLoRA-train) + Torch/CUDA backend
+- [x] BioMedLM embedder + FAISS KB build + PubMed streaming ingest
+- [x] Fixtures + GitHub Actions CI
+
+**Needs a real run to validate (external deps, can't be done offline):**
+- [ ] First end-to-end run on Apple Silicon with Llama-2 weights (pin `mlx-lm` version)
+- [ ] Verify Med-HALT HF ids/fields (marked `VERIFY` in `evaluation/datasets.py`)
+- [ ] Reproduce Table 1 and fill in `RESULTS.md`

@@ -19,8 +19,9 @@ data/**
 *.npz
 *.bin
 
-# Adapters / checkpoints
-adapters/
-checkpoints/
+# Trained adapters / checkpoints (anchored so they don't match the SOURCE package
+# src/medrag_das/adapters/). Training output lives under data/ (already ignored above).
+/data/adapters/
+/checkpoints/
 
 .DS_Store

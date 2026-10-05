@@ -34,3 +34,8 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+# `src` -> medrag_das (incl. medrag_das.evaluation); no PYTHONPATH juggling needed.
+pythonpath = ["src"]
+testpaths = ["tests"]

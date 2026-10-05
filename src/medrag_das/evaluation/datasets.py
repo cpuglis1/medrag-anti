@@ -24,6 +24,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterator
 
+from ..config import REPO_ROOT
+
 # --- Hugging Face sources (VERIFY ids/configs/fields against the live datasets) -----------
 HF_MEDMCQA = "openlifescienceai/medmcqa"
 HF_MEDMCQA_SPLIT = "validation"            # labeled ~4.2k; official `test` has hidden labels
@@ -196,7 +198,7 @@ def load_medhalt_fake(
 
 
 # Default fixture locations, so the runner/tests can grab offline data easily.
-FIXTURES = Path(__file__).resolve().parents[1] / "tests" / "fixtures"
+FIXTURES = REPO_ROOT / "tests" / "fixtures"
 FIXTURE_PATHS = {
     "medmcqa": FIXTURES / "medmcqa_sample.jsonl",
     "nota": FIXTURES / "nota_sample.jsonl",

@@ -1,7 +1,7 @@
 """Dataset-loader tests — exercise the fixture path only (no HF download, no weights)."""
 from medrag_das.config import load_config
 
-from eval.datasets import (
+from medrag_das.evaluation.datasets import (
     FIXTURE_PATHS,
     load_medhalt_fake,
     load_medhalt_nota,

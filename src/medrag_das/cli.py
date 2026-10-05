@@ -72,8 +72,8 @@ def eval_cmd(
     datasets: list[str] = typer.Option(list(("medmcqa", "nota", "fake")), help="Datasets."),
     limit: int = typer.Option(None, help="Cap questions per dataset (debug)."),
 ):
-    """Run the 4-method × 3-dataset evaluation matrix (eval/run_eval.py)."""
-    from eval.run_eval import run_matrix
+    """Run the 4-method × 3-dataset evaluation matrix (evaluation/run_eval.py)."""
+    from .evaluation.run_eval import run_matrix
 
     cfg = load_config()
     run_matrix(cfg, methods=methods, datasets=datasets, limit=limit)
@@ -86,19 +86,39 @@ def ask(
     category: str = typer.Option(None, help="Oracle category slug (for DAS)."),
     method: str = typer.Option("das_rag", help="baseline|das|rag|das_rag"),
 ):
-    """Ask one question through the full pipeline."""
+    """Ask one question through the full pipeline (loads only what `method` needs)."""
     cfg = load_config()
     opts = [o.strip() for o in options.split("|") if o.strip()]
 
+    from .adapters.registry import AdapterRegistry
+    from .adapters.selector import build_selector
     from .backends import get_backend
+    from .config import REPO_ROOT
+    from .evaluation.run_eval import build_retriever
+    from .pipeline import Pipeline
 
     backend = get_backend(cfg.backend)
     backend.load_base(cfg.models["base_model"], cfg.models["quantize_bits"])
-    typer.echo("Pipeline wiring is in pipeline.py; build retriever+registry here to run live.")
-    typer.secho(
-        "Stub: implement backend + retrieval to answer. (See README checklist.)",
-        fg=typer.colors.YELLOW,
-    )
+
+    registry = selector = retriever = None
+    if method in ("das", "das_rag"):
+        registry = AdapterRegistry(backend, REPO_ROOT / cfg.adapters.dir, cfg.category_slugs)
+        selector = build_selector(
+            cfg.selection["strategy"], cfg.category_slugs,
+            fake_strategy=cfg.selection["fake_strategy"], backend=backend,
+        )
+    if method in ("rag", "das_rag"):
+        retriever = build_retriever(cfg)
+
+    pipe = Pipeline(backend, registry=registry, selector=selector, retriever=retriever,
+                    gen_cfg=cfg.generation)
+    out = pipe.run(method, question, opts, gold_category_slug=category)
+
+    typer.echo(f"\nadapter: {out.adapter_slug}   retrieved: {len(out.context)} abstract(s)")
+    typer.echo(f"parsed  : cop_index={out.answer.cop_index} abstained={out.answer.abstained} "
+               f"parse_failed={out.answer.parse_failed}")
+    typer.secho("\n--- raw generation ---", fg=typer.colors.CYAN)
+    typer.echo(out.answer.raw)
 
 
 if __name__ == "__main__":

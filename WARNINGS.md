@@ -19,10 +19,18 @@ surviving repository. The only published artifact is the early retrieval-only sn
 and control flow are faithful to what the paper *describes*, but:
 
 - Numbers the paper does not state (e.g. the cosine threshold `t`, exact LoRA rank, learning
-  rate, per-category sample counts) are **guesses marked `# TODO: paper does not specify`**.
-- Any file that trains, embeds, or calls a model is a **stub with a documented contract**,
-  not verified working code. Do not assume a stub reproduces the paper's result until you
-  have run it end-to-end and checked it yourself.
+  rate, per-category sample counts) are **guesses marked `PAPER UNSPECIFIED`** in
+  `configs/default.yaml`.
+- The model/data code (MLX + Torch backends, BioMedLM embedder, FAISS KB build, QLoRA
+  training, dataset loaders) is now **fully implemented, but has NOT been executed
+  end-to-end** in this environment — Llama-2 is gated and the full run needs ~18 GB of
+  downloads plus hours of on-device compute. It is written against the `mlx-lm` /
+  `transformers` / `datasets` / `faiss` APIs **as of early 2026**; those APIs shift between
+  releases, so **pin your versions** and expect to adjust a call or two on first run. Treat
+  the first successful end-to-end run as the real validation — do not assume these reproduce
+  the paper's numbers until you have run them and checked the output yourself.
+- The Hugging Face dataset ids/field names for Med-HALT are marked `VERIFY` in
+  `evaluation/datasets.py` and fail loudly (not silently) if they don't match.
 
 ---
 

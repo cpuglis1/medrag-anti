@@ -20,17 +20,27 @@ from .embedder import BioMedLMEmbedder, EmbedConfig
 
 
 def iter_pubmed_abstracts(limit: int):
-    """Yield (doc_id, abstract_text) from TF scientific_papers/pubmed.
+    """Stream (doc_id, abstract_text) from scientific_papers/pubmed via HF `datasets`.
 
-    Either tensorflow_datasets or HF `datasets` can serve this corpus; pick one and pin it.
+    Streaming avoids downloading the full corpus. `scientific_papers` ships a loading script,
+    so trust_remote_code=True is required. Skips blank abstracts. Keep this corpus independent
+    of MedMCQA/Med-HALT content to limit leakage (paper §4.1).
     """
-    # import tensorflow_datasets as tfds
-    # ds = tfds.load("scientific_papers/pubmed", split="train")
-    # for i, ex in enumerate(ds.take(limit)):
-    #     yield str(i), ex["abstract"].numpy().decode("utf-8")
-    raise NotImplementedError(
-        "iter_pubmed_abstracts: stream scientific_papers/pubmed abstracts (limit rows)."
+    from datasets import load_dataset
+
+    ds = load_dataset(
+        "scientific_papers", "pubmed", split="train",
+        streaming=True, trust_remote_code=True,
     )
+    yielded = 0
+    for i, ex in enumerate(ds):
+        abstract = (ex.get("abstract") or "").strip()
+        if not abstract:
+            continue
+        yield str(i), abstract
+        yielded += 1
+        if yielded >= limit:
+            break
 
 
 def build(

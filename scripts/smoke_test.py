@@ -44,7 +44,8 @@ def main() -> int:
     assert sel.select("q", gold_category_slug="surgery") == "surgery"
     print("[ok] oracle selector")
 
-    print("\nSMOKE TEST PASSED — pure-logic layer is wired. Model/data stubs remain to implement.")
+    print("\nSMOKE TEST PASSED — pure-logic layer is wired. Model/data code is implemented "
+          "but needs weights + datasets (and a version-pinned env) to run end-to-end.")
     return 0
 
 
