@@ -1,0 +1,26 @@
+# Never commit weights, datasets, indexes, or secrets (see WARNINGS.md §6).
+.env
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+
+# Data artifacts — large and/or license-restricted
+data/**
+!data/.gitkeep
+*.index
+*.faiss
+*.safetensors
+*.gguf
+*.npz
+*.bin
+
+# Adapters / checkpoints
+adapters/
+checkpoints/
+
+.DS_Store

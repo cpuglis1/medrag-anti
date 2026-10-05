@@ -1,0 +1,25 @@
+# The 21 MedMCQA categories = 21 QLoRA adapters (paper Appendix Table 3).
+# `slug` is used for adapter directory names and the oracle router key.
+# `medmcqa_label` must match the exact string in the MedMCQA `subject_name` field.
+categories:
+  - {slug: anaesthesia,               medmcqa_label: "Anaesthesia"}
+  - {slug: anatomy,                   medmcqa_label: "Anatomy"}
+  - {slug: biochemistry,              medmcqa_label: "Biochemistry"}
+  - {slug: dental,                    medmcqa_label: "Dental"}
+  - {slug: ent,                       medmcqa_label: "ENT"}
+  - {slug: forensic_medicine,         medmcqa_label: "Forensic Medicine"}
+  - {slug: gynaecology_obstetrics,    medmcqa_label: "Gynaecology & Obstetrics"}
+  - {slug: medicine,                  medmcqa_label: "Medicine"}
+  - {slug: microbiology,              medmcqa_label: "Microbiology"}
+  - {slug: ophthalmology,             medmcqa_label: "Ophthalmology"}
+  - {slug: orthopaedics,              medmcqa_label: "Orthopaedics"}
+  - {slug: pathology,                 medmcqa_label: "Pathology"}
+  - {slug: pediatrics,                medmcqa_label: "Pediatrics"}
+  - {slug: pharmacology,              medmcqa_label: "Pharmacology"}
+  - {slug: physiology,                medmcqa_label: "Physiology"}
+  - {slug: psychiatry,                medmcqa_label: "Psychiatry"}
+  - {slug: radiology,                 medmcqa_label: "Radiology"}
+  - {slug: skin,                      medmcqa_label: "Skin"}
+  - {slug: social_preventive_medicine, medmcqa_label: "Social & Preventive Medicine"}
+  - {slug: surgery,                   medmcqa_label: "Surgery"}
+  - {slug: unknown,                   medmcqa_label: "Unknown"}

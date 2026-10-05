@@ -1,0 +1,49 @@
+# Global configuration for the DAS + RAG system.
+# Values marked "PAPER UNSPECIFIED" are reconstruction guesses — tune and document them.
+
+backend: mlx                         # mlx (primary, Apple Silicon) | torch (stub)
+
+models:
+  base_model: meta-llama/Llama-2-7b  # 8-bit quantized at load; run via MLX
+  quantize_bits: 8                   # paper: fp32 -> int8, base ~3.98 GiB
+  embed_model: stanford-crfm/BioMedLM  # 2.7B, used for KB + query embeddings
+
+retrieval:
+  dataset: scientific_papers         # TF dataset, "pubmed" config, OpenAccess
+  dataset_config: pubmed
+  kb_limit: 100000                   # ">100,000 abstracts"
+  embed_batch_size: 32               # paper: abstracts processed in batches of 32
+  chunk_words: 1024                  # paper: subset into chunks of 1024 words
+  pool: mean                         # mean of per-chunk embeddings, then pad
+  faiss_index: IndexFlatL2           # exact L2 search
+  cosine_threshold: 0.75             # 't' in S = {x_i : cs(x,x_i) >= t}  — PAPER UNSPECIFIED
+  top_k: 3                           # return up to min(|S|, 3)
+  kb_path: data/faiss/pubmed.index
+  meta_path: data/faiss/pubmed_meta.jsonl
+
+adapters:
+  dir: data/adapters                 # one subdir per category slug
+  dataset: openlifescienceai/medmcqa
+  max_samples_per_category: 10000    # paper: max 10k per category
+  lora_layers: 4                     # paper: 4 LoRA layers (not the default 16)
+  lora_rank: 8                       # PAPER UNSPECIFIED
+  lora_alpha: 16                     # PAPER UNSPECIFIED
+  batch_size: 2                      # paper: batch size 2
+  learning_rate: 1.0e-5              # PAPER UNSPECIFIED
+  max_iters: 600                     # upper bound; early-stop below
+  early_stop:
+    monitor: train_loss              # paper: stop when train loss plateaus (10-60 iters)
+    patience: 20                     # PAPER UNSPECIFIED
+    min_delta: 1.0e-3                # PAPER UNSPECIFIED
+
+selection:
+  strategy: oracle                   # oracle (paper) | classifier (deployment; stub)
+  fake_strategy: random              # paper: random adapter for Med-HALT FAKE
+
+generation:
+  max_new_tokens: 512
+  temperature: 0.0                   # deterministic; paper does not specify, keep reproducible
+  warm_ttl_sec: 1800                 # keep a fused model warm this long before swapping out
+
+paths:
+  data_dir: data

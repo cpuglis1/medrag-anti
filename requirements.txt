@@ -1,0 +1,19 @@
+# Core (cross-platform). Install the project instead for extras: `pip install -e .[mlx]`
+numpy>=1.26
+pyyaml>=6.0
+pydantic>=2.6
+typer>=0.12
+faiss-cpu>=1.8
+datasets>=2.19
+transformers>=4.40
+tqdm>=4.66
+
+# Apple Silicon backend (primary — matches the paper). Comment out on CUDA.
+mlx>=0.12
+mlx-lm>=0.12
+
+# CUDA backend (stub path). Uncomment on Linux+NVIDIA; remove mlx lines above.
+# torch>=2.2
+# peft>=0.10
+# bitsandbytes>=0.43
+# accelerate>=0.29

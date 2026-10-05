@@ -1,0 +1,36 @@
+[project]
+name = "medrag-das"
+version = "0.1.0"
+description = "Reconstruction scaffold: Dynamic Adapter Swapping + RAG for parroting reduction (Puglisi, JHU 2024)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "See WARNINGS.md §6 — no weights/data shipped; respect upstream licenses" }
+authors = [{ name = "Christopher Puglisi" }]
+
+# NOTE: MLX is Apple-Silicon only. On CUDA, drop mlx* and use the torch extra instead
+# (torch backend is a stub — see WARNINGS.md §7).
+dependencies = [
+    "numpy>=1.26",
+    "pyyaml>=6.0",
+    "pydantic>=2.6",
+    "typer>=0.12",
+    "faiss-cpu>=1.8",
+    "datasets>=2.19",
+    "transformers>=4.40",
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+mlx = ["mlx>=0.12", "mlx-lm>=0.12"]            # Apple Silicon: base model + QLoRA
+torch = ["torch>=2.2", "peft>=0.10", "bitsandbytes>=0.43", "accelerate>=0.29"]  # CUDA (stub)
+dev = ["pytest>=8.0", "ruff>=0.4"]
+
+[project.scripts]
+medrag = "medrag_das.cli:app"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

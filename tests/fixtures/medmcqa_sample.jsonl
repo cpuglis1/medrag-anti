@@ -1,0 +1,6 @@
+{"question": "Which drug irreversibly inhibits cyclooxygenase?", "options": ["Aspirin", "Ibuprofen", "Paracetamol", "Celecoxib"], "gold_index": 1, "gold_label": "pharmacology", "correct_is_abstain": false}
+{"question": "The femur is classified as which type of bone?", "options": ["Flat", "Long", "Short", "Sesamoid"], "gold_index": 2, "gold_label": "anatomy", "correct_is_abstain": false}
+{"question": "Which vitamin deficiency causes scurvy?", "options": ["Vitamin A", "Vitamin B12", "Vitamin C", "Vitamin D"], "gold_index": 3, "gold_label": "biochemistry", "correct_is_abstain": false}
+{"question": "The most common causative organism of lobar pneumonia is?", "options": ["Staphylococcus aureus", "Streptococcus pneumoniae", "Klebsiella pneumoniae", "Haemophilus influenzae"], "gold_index": 2, "gold_label": "microbiology", "correct_is_abstain": false}
+{"question": "Which nerve is most commonly injured in a mid-shaft humeral fracture?", "options": ["Median nerve", "Ulnar nerve", "Radial nerve", "Axillary nerve"], "gold_index": 3, "gold_label": "orthopaedics", "correct_is_abstain": false}
+{"question": "First-line pharmacologic treatment for anaphylaxis is?", "options": ["Antihistamine", "Corticosteroid", "Adrenaline (epinephrine)", "Salbutamol"], "gold_index": 3, "gold_label": "medicine", "correct_is_abstain": false}
